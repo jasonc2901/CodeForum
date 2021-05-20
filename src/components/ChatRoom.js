@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 //import icons
 import SendIcon from '../assets/send.png';
@@ -10,6 +10,7 @@ import firebase from 'firebase/app';
 
 //components 
 import ChatBubble from './ChatBubble';
+
 
 function ChatRoom(props) {
     //placeholder div to allow for automatic scroll to bottom
@@ -30,6 +31,7 @@ function ChatRoom(props) {
     //reference to the firebase auth
     const auth = firebase.auth();
 
+
     //function to handle the sending of a message
     const sendMessage = async (e) => {
         //prevent page refresh upon message send
@@ -48,11 +50,15 @@ function ChatRoom(props) {
         placeholder.current.scrollIntoView({ behavior: 'smooth' });
     }
 
+    useEffect(() => {
+        placeholder.current.scrollIntoView({ behavior: 'smooth' });
+    })
+
     return (
         <React.Fragment>
             <main>
                 {messages ? messages.map(msg => <ChatBubble key={msg.id} message={msg} />) : null}
-                <span ref={placeholder}></span>
+                <div ref={placeholder}></div>
             </main>
 
             <form onSubmit={sendMessage}>
@@ -64,6 +70,8 @@ function ChatRoom(props) {
         </React.Fragment>
 
     )
+
+
 }
 
 export default ChatRoom
