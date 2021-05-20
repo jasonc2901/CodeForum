@@ -30,6 +30,7 @@ body {
     width: 40%;
   }
 
+  
   .App section {
     display: flex;
     flex-direction: column;
@@ -39,6 +40,7 @@ body {
   }
   
   main {
+    position: relative;
     padding: 10px;
     height: 80vh;
     margin: 10vh 0 10vh;
@@ -47,6 +49,11 @@ body {
     flex-direction: column;
   }
   
+  .chatroomContainer{
+    display: flex;
+    justify-content:space-between;
+  }
+
   main::-webkit-scrollbar {
     width: 0.25rem;
   }
@@ -123,6 +130,20 @@ body {
   .sendBtn{
     margin: -1rem;
   }
+
+  .sidebarBtn{
+    width: 50px;
+    padding-bottom: 200px;
+    z-index: 100;
+  }
+
+  .drawerBtn {
+    border-radius: 0px;
+    margin: -2vh;
+    width: 30px;
+    height: 30px;
+  }
+
   .greeting-div{
       align-content: center;  
       align-self: center;
@@ -197,3 +218,6 @@ body {
     border-radius: 50%;
     margin: 2px 5px;
   }
+
+
+  
