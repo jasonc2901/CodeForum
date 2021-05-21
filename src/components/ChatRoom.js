@@ -34,6 +34,9 @@ function ChatRoom(props) {
     //state to hold the sidebar open values
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
+    //sidebar selected index
+    const [sidebarSelectedIndex, setSidebarSelectedIndex] = useState(0);
+
     //reference to the firebase auth
     const auth = firebase.auth();
 
@@ -80,20 +83,36 @@ function ChatRoom(props) {
         });
     }
 
+    const updateSelected = (index) => {
+        setSidebarSelectedIndex(index);
+    }
+
     //stores the content for the sidebars
     const sidebarContent = () => {
+        const rooms = [
+            'React',
+            'Python',
+            'Flutter',
+            'JavaScript',
+            'Swift',
+            'C#',
+            'C++',
+            'C'
+        ];
+
         return (
             <React.Fragment>
                 <h1 style={{ color: '#6895e9', width: '200px' }}>Rooms</h1>
-                <h2>React</h2>
-                <h2>Python</h2>
-                <h2>Flutter</h2>
-                <h2>JavaScript</h2>
-                <h2>Swift</h2>
-                <h2>C#</h2>
-                <h2>C++</h2>
-                <h2>C</h2>
-            </React.Fragment>
+                {rooms.map((room, index) => (
+                    sidebarSelectedIndex === index ?
+                        <div className='itemSelected' onClick={() => updateSelected(index)}>
+                            <h1>{room}</h1>
+                        </div> :
+                        <div className='itemDeselected' onClick={() => updateSelected(index)}>
+                            <h1>{room}</h1>
+                        </div>
+                ))}
+            </React.Fragment >
         );
     }
 

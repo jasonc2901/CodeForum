@@ -127,6 +127,13 @@ body {
       font-size: 25px;
   }
 
+  .sidebarSelected {
+    color: #6895e9;
+  }
+
+  .sidebarDeselected {
+    color: black;
+  }
   .sendBtn{
     margin: -1rem;
   }
@@ -219,5 +226,23 @@ body {
     margin: 2px 5px;
   }
 
+  .App {
+    font-family: sans-serif;
+    background: #1c1d1f;
+    color: white;
+    height: 100vh;
+    box-sizing: border-box;
+  }
+  
+  .itemSelected, .itemDeselected :hover{
+    cursor: pointer;
+  }
 
+  .itemSelected {
+    color: #6895e9;
+  }
+  
+  .itemDeselected {
+    color: black;
+  }
   
