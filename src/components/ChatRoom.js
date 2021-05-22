@@ -125,10 +125,13 @@ function ChatRoom(props) {
                 onSetOpen={sidebarBtnClick}
                 styles={{
                     sidebar: {
+                        position: 'fixed',
+                        marginBottom: '0px',
                         background: "white",
                         padding: '10px',
-                        height: '100vh !important',
-                        zIndex: '100'
+                        minHeight: '100vh !important',
+                        height: '10vh !important',
+                        zIndex: '1000'
                     }
                 }
                 }

@@ -41,8 +41,9 @@ body {
   
   main {
     position: relative;
+    margin-top: 5vh;
     padding: 10px;
-    height: 80vh;
+    height: 70vh;
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
