@@ -112,19 +112,27 @@ function ChatRoom(props) {
                             <h1>{room}</h1>
                         </div>
                 ))}
-            </React.Fragment >
+            </React.Fragment>
         );
     }
 
     return (
         <React.Fragment>
+            <Sidebar
+                className='sidebar'
+                sidebar={sidebarContent()}
+                open={sidebarOpen}
+                onSetOpen={sidebarBtnClick}
+                styles={{
+                    sidebar: {
+                        background: "white",
+                        padding: '10px',
+                        height: '100vh !important',
+                    }
+                }
+                }
+            />
             <main>
-                <Sidebar
-                    sidebar={sidebarContent()}
-                    open={sidebarOpen}
-                    onSetOpen={sidebarBtnClick}
-                    styles={{ sidebar: { background: "white" } }}
-                />
                 {messages ? messages.map(msg => <ChatBubble key={msg.id} message={msg} />) : null}
                 <div ref={placeholder}></div>
             </main>
