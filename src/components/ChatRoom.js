@@ -128,6 +128,7 @@ function ChatRoom(props) {
                         background: "white",
                         padding: '10px',
                         height: '100vh !important',
+                        zIndex: '100'
                     }
                 }
                 }
