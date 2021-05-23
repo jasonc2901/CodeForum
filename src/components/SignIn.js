@@ -1,6 +1,8 @@
 import React from 'react';
 import firebase from 'firebase/app';
 import CodeImg from '../assets/code.png';
+import GoogleButton from 'react-google-button';
+import Paper from '@material-ui/core/Paper';
 
 
 function SignIn() {
@@ -11,15 +13,16 @@ function SignIn() {
         const provider = new firebase.auth.GoogleAuthProvider();
         auth.signInWithPopup(provider);
     }
+
     return (
         <React.Fragment>
             <div className='code-img-div'>
                 <img alt='code' src={CodeImg}></img>
             </div>
-            <button className="sign-in" onClick={signInWithGoogle}>Sign in with Google</button>
-            <div className='greeting-div'>
+            <GoogleButton style={{ alignSelf: 'center' }} onClick={signInWithGoogle} />
+            <Paper elevation={3} style={{ width: '45vh', alignSelf: 'center', marginTop: '50px' }}>
                 <p className='greeting'>Welcome to the CodingForum, join now and ask any coding related questions!</p>
-            </div>
+            </Paper>
         </React.Fragment>
     )
 }

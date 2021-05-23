@@ -2,8 +2,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 
 //import icons
-import SendIcon from '../assets/send.png';
-import MenuIcon from '../assets/menu.png';
+import SendIcon from '@material-ui/icons/Send';
+import MenuIcon from '@material-ui/icons/Menu';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 
 //firebase / hooks imports
 import { useCollectionData } from 'react-firebase-hooks/firestore';
@@ -12,18 +14,36 @@ import firebase from 'firebase/app';
 //components 
 import ChatBubble from './ChatBubble';
 import Sidebar from "react-sidebar";
+import { Send } from '@material-ui/icons';
 
 
 
 function ChatRoom(props) {
     //placeholder div to allow for automatic scroll to bottom
-    const placeholder = useRef();
+    const scrollDiv = useRef();
 
-    //get a reference to the messages collection in database
-    const messagesReference = props.firestore.collection('messages');
+    //all available rooms
+    //TODO: PULL ALL AVAILABLE ROOMS DIRECTLY FROM FIREBASE
+    //TODO: ALLOW USER TO CREATE A NEW ROOM ?
+    const rooms = [
+        'React',
+        'Python',
+        'Flutter',
+        'JavaScript',
+        'Swift',
+        'C#',
+        'C++',
+        'C'
+    ];
+
+    //current room 
+    const [currentRoom, setCurrentRoom] = useState(rooms[0]);
+
+    //get a reference to the forum collection associated with each room
+    const forumReference = props.firestore.collection('forum').doc(currentRoom).collection(`${currentRoom}-Messages`);
 
     //create the query - only show 30 most recent messages
-    const query = messagesReference.orderBy('createdAt').limit(30);
+    const query = forumReference.orderBy('createdAt').limit(30);
 
     //store the data returned from database
     const [messages] = useCollectionData(query, { idField: 'id' });
@@ -47,13 +67,13 @@ function ChatRoom(props) {
         e.preventDefault();
 
         //extract uid and photoURL from auth user
-        const { uid, photoURL } = auth.currentUser;
+        const { uid, photoURL, displayName } = auth.currentUser;
 
         //store the current server timestamp
         const createdAt = props.firebase.firestore.FieldValue.serverTimestamp();
 
         //call the add msg to db function
-        await addMsgToDb(msgValue, createdAt, uid, photoURL);
+        await addMsgToDb(msgValue, createdAt, uid, photoURL, displayName);
 
         //clear the form
         setMsgValue('');
@@ -70,39 +90,37 @@ function ChatRoom(props) {
 
     //function that scrolls page to the bottom
     const scrollToBottom = () => {
-        placeholder.current.scrollIntoView({ behavior: 'smooth' });
+        scrollDiv.current.scrollIntoView({ behavior: 'smooth' });
     }
 
     //function to add the sent message to the collection
-    const addMsgToDb = async (text, created, userId, pic) => {
-        await messagesReference.add({
+    const addMsgToDb = async (text, created, userId, pic, sender) => {
+        await forumReference.add({
             text: text,
             createdAt: created,
             uid: userId,
-            photoURL: pic
+            photoURL: pic,
+            sender: sender
         });
     }
 
     const updateSelected = (index) => {
+        //set the current index
         setSidebarSelectedIndex(index);
+
+        //update the selected room state
+        setCurrentRoom(rooms[index]);
+
     }
 
     //stores the content for the sidebars
     const sidebarContent = () => {
-        const rooms = [
-            'React',
-            'Python',
-            'Flutter',
-            'JavaScript',
-            'Swift',
-            'C#',
-            'C++',
-            'C'
-        ];
-
         return (
             <React.Fragment>
-                <h1 style={{ color: '#6895e9', width: '200px' }}>Rooms</h1>
+                <div style={{ borderBottom: '1px solid #6895e9' }}>
+                    <h1 style={{ color: 'gray', width: '200px', marginBottom: '0px' }}>Rooms</h1>
+                    <h5 style={{ color: 'gray', width: '200px' }}>Current Room: {currentRoom} </h5>
+                </div>
                 {rooms.map((room, index) => (
                     sidebarSelectedIndex === index ?
                         <div className='itemSelected' onClick={() => updateSelected(index)}>
@@ -138,16 +156,27 @@ function ChatRoom(props) {
             />
             <main>
                 {messages ? messages.map(msg => <ChatBubble key={msg.id} message={msg} />) : null}
-                <div ref={placeholder}></div>
+                <div ref={scrollDiv}></div>
             </main>
             <form onSubmit={sendMessage}>
-                <button type='reset' className='sidebarBtn' onClick={sidebarBtnClick}>
-                    <img className='drawerBtn' src={MenuIcon} alt='menu'></img>
-                </button>
+                <IconButton
+                    type='reset'
+                    onClick={sidebarBtnClick}
+                    style={
+                        {
+                            width: '10vh',
+                            paddingLeft: '40px',
+                            paddingRight: '40px',
+                            background: '#6895e9',
+                            borderRadius: '0px'
+                        }
+                    }>
+                    <MenuIcon style={{ color: 'white' }} />
+                </IconButton>
                 <input value={msgValue} onChange={(e) => setMsgValue(e.target.value)} placeholder="Ask a coding question!" />
-                <button type="submit" disabled={!msgValue}>
-                    <img className='sendBtn' src={SendIcon} alt='send'></img>
-                </button>
+                <IconButton type='submit' disabled={!msgValue} style={{ color: 'white', background: '#6895e9', borderRadius: '0px', width: '9vh' }}>
+                    <SendIcon />
+                </IconButton>
             </form>
         </React.Fragment>
 

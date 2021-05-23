@@ -70,7 +70,7 @@ body {
     height: 10vh;
     position: fixed;
     bottom: 0;
-    background-color: #000000;
+    background-color: rgb(116, 115, 117);
     width: 100%;
     max-width: 728px;
     display: flex;
@@ -78,8 +78,7 @@ body {
   }
   
   form button {
-    width: 20%;
-    background-color: #6895e9;
+    width: 10%;
   }
   
   
@@ -124,7 +123,7 @@ body {
       align-content: center;
       color: #6895e9;
       font-weight: 500;
-      font-size: 25px;
+      font-size: 20px;
   }
 
 
@@ -134,15 +133,6 @@ body {
 
   .sidebarDeselected {
     color: black;
-  }
-  .sendBtn{
-    margin: -1rem;
-  }
-
-  .sidebarBtn{
-    width: 50px;
-    padding-bottom: 200px;
-    z-index: 100;
   }
 
   .drawerBtn {
@@ -187,12 +177,13 @@ body {
   }
   
   .code-img-div img{
-    width: 250px;
-    height: 35vh;
+    width: 30vh;
+    height: 30vh;
   }
 
   .header-icon{
     margin-right:10px;
+    height: auto;
     width: 45px;
   }
   
@@ -200,22 +191,25 @@ body {
     display:inline-block;
     vertical-align:middle;
   }
+
   .message {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
   }
-  
   
   .sent {
     flex-direction: row-reverse;
   }
   
   .sent p {
+    max-width: 200px;
     color: white;
     background: #0b93f6;
     align-self: flex-end;
   }
   .received p {
+    max-width: 200px;
     background: #93939e;
     color: white;
   }

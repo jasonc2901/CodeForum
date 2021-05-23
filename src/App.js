@@ -18,7 +18,7 @@ import './styling/custom.css';
 
 //import components 
 import SignIn from './components/SignIn';
-import SignOut from './components/SignOut';
+import Header from './components/Header';
 import ChatRoom from './components/ChatRoom';
 
 //initialize the firebase application
@@ -36,13 +36,7 @@ function App() {
   return (
     <div className="App">
       {/* STATIC HEADER THAT PERSISTS THROUGHOUT APP */}
-      <header>
-        <img className='header-icon' src={CodeImg} alt='header-icon'></img>
-        <h1>CodingForum</h1>
-        <div className='spacer'></div>
-        <SignOut />
-      </header>
-
+      <Header />
       <section>
         {user ? <ChatRoom firebase={firebase} firestore={firestore} auth={auth} /> : <SignIn />}
       </section>
