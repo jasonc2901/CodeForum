@@ -10,11 +10,11 @@ import IconButton from '@material-ui/core/IconButton';
 //firebase / hooks imports
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import firebase from 'firebase/app';
-
+import useWindowSize from '../providers/ScreenSizeProvider';
 //components 
 import ChatBubble from './ChatBubble';
 import Sidebar from "react-sidebar";
-import { Send } from '@material-ui/icons';
+
 
 
 
@@ -59,6 +59,9 @@ function ChatRoom(props) {
 
     //reference to the firebase auth
     const auth = firebase.auth();
+
+    //get the screen size hook
+    const screenSize = useWindowSize();
 
 
     //function to handle the sending of a message
@@ -173,7 +176,12 @@ function ChatRoom(props) {
                     }>
                     <MenuIcon style={{ color: 'white' }} />
                 </IconButton>
-                <input value={msgValue} onChange={(e) => setMsgValue(e.target.value)} placeholder="Ask a coding question!" />
+                <input style={{
+                    fontSize: screenSize.width < 20 ? `${screenSize.width / 20}px` : '20px'
+                }}
+                    value={msgValue}
+                    onChange={(e) => setMsgValue(e.target.value)}
+                    placeholder="Ask a coding question!" />
                 <IconButton type='submit' disabled={!msgValue} style={{ color: 'white', background: '#6895e9', borderRadius: '0px', width: '9vh' }}>
                     <SendIcon />
                 </IconButton>
